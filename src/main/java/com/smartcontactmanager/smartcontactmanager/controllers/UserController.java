@@ -28,6 +28,7 @@ public class UserController {
         }
         user.setRole("ROLE_USER");
         userService.saveUser(user);
+        model.addAttribute("user",user);
         return "signup"; 
     }
 }
