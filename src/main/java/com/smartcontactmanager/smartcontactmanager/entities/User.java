@@ -19,15 +19,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @NotEmpty
-    @NotNull
+    @NotEmpty(message = "name can't be empty")
+    @NotNull(message = "name can't be null")
     private String name;
     @Column(unique = true)
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "email can't be null")
+    @NotEmpty(message = "email can't be empty")
     private String email;
-    @NotEmpty
-    @NotNull
+    @NotEmpty(message = "passowrd can't be empty")
+    @NotNull(message = "password can't be null")
     private String password;
     private Boolean active = true;
     private String role;
