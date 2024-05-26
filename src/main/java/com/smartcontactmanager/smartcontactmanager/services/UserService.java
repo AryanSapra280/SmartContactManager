@@ -20,4 +20,7 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
 }

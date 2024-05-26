@@ -30,7 +30,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("title", "Home-Smart Contact Manager");
+        model.addAttribute("title", "Home-Smart Contact Duplicate");
         return "home";
     }
 
