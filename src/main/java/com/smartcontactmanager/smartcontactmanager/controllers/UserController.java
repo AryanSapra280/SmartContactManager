@@ -1,6 +1,8 @@
 package com.smartcontactmanager.smartcontactmanager.controllers;
 
+import com.smartcontactmanager.smartcontactmanager.helperMessages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,17 +20,28 @@ public class UserController {
     
     @Autowired
     private UserService userService;
-    
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @PostMapping("/do_register")
     public String register(@Valid @ModelAttribute("user") User user, BindingResult  bindingResult, Model model) {
-        
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
-            return "signup";
+
+        try {
+            if(bindingResult.hasErrors()) {
+                throw new Exception("please fill input correctly");
+            }
+            user.setRole("ROLE_USER");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.saveUser(user);
+            model.addAttribute("user",user);
+            model.addAttribute("message",new Message("Successful registration","alert-success"));
+
+        }catch (Exception e) {
+            model.addAttribute("user",user);
+            model.addAttribute("message",new Message("Something went wrong, "  + e.getMessage() + "!!","alert-danger"));
+
         }
-        user.setRole("ROLE_USER");
-        userService.saveUser(user);
-        model.addAttribute("user",user);
-        return "signup"; 
+        return "signup";
+
     }
 }
