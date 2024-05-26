@@ -19,11 +19,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @NotEmpty
+    @NotNull
     private String name;
     @Column(unique = true)
     @NotNull
     @NotEmpty
     private String email;
+    @NotEmpty
+    @NotNull
     private String password;
     private Boolean active = true;
     private String role;
